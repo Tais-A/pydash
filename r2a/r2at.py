@@ -50,7 +50,7 @@ class R2AT(IR2A):
         else:
             self.buffer_size = 0
 
-        if self.buffer_size >= 40 and self.index < 19:
+        if self.buffer_size >= 50 and self.index < 19:
             self.index += 1
         if self.buffer_size <= 10 and self.index > 0:
             self.index -= 1
@@ -74,19 +74,12 @@ class R2AT(IR2A):
         self.listMI.append(mi)
 
         #Média com peso, usada para priozar throughout mais recentes. 
-        #self.throughputs_peso.append((1/self.contador) * abs(vazao - mi))
-        print(self.contador)
-        # if vazao != mi: 
-        #     self.throughputs_peso.append(1/(self.contador * abs(vazao - mi)))
-        #self.throughputs_peso.append(self.contador/596 * abs(vazao - mi))
         i = 0
         sigmaList = []
         for item in self.throughputs:
             sigmaList.append((i/self.contador) * abs(item - mi))
             i += 1
-        #self.throughputs_peso.append(self.contador * abs(vazao - mi))
-        
-        # sigma = sum(self.throughputs_peso)
+       
         sigma = sum(sigmaList)
 
 
@@ -103,25 +96,12 @@ class R2AT(IR2A):
             else: 
                 index = i
                 break
-
-        # difference_array2 = numpy.absolute(array - desc + cres)
-        # index = difference_array2.argmin()
-
-        # print(difference_array)
-        # print(difference_array2)
-        #index = numpy.argmin(lst - abs(desc + cres))
-
+        
 
         if self.buffer_size >= 40 and self.index < 19:
             self.index = index + 1
         elif self.buffer_size <= 10 and self.index > 0:
             self.index = index - 1
-        # else:
-        #     self.index = index
-        # else:
-        #     if index < 19 and self.buffer_size >= 30:
-        #         self.index = index + 1
-        #     else:
         else:
             self.index = index
 
