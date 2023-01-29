@@ -8,7 +8,9 @@
 
 # Implementação:
     # > Finalization module Player
-
+    
+    
+from r2a.ir2a import IR2A
 from abc import ABCMeta, abstractmethod
 from base.message import Message, MessageKind
 from base.whiteboard import Whiteboard
