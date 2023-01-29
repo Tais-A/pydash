@@ -1,13 +1,13 @@
 # Alunos:
     # Tais Alves Oliveira - 190117176
-    # 
+    # Thiago Maciel de Campos - 180131699
 
 # Disciplina:
     # Dep. Ciência da Computação - Universidade de Brasília (UnB),
     # Redes de Computadores - 2022.2
 
 # Implementação:
-    # > Finalization module Player
+    # Adaptação do Dynamic Segment Size Selection in HTTP Based Adaptive Video Streaming, alterando a qualidade do video
     
     
 from r2a.ir2a import IR2A
@@ -29,11 +29,11 @@ class R2AT(IR2A):
         self.request_time = 0
         self.qi = []
   
-        self.index = 4 
+        self.index = 0 
 
         self.whiteboard = Whiteboard.get_instance()
 
-        self.uso_buffer = 0
+        self.uso_buffer = 0 #Verifica o tamanho da lista de buffer
 
 
     def handle_xml_request(self, msg):
@@ -56,7 +56,7 @@ class R2AT(IR2A):
             buffer_size = 0
         
         #Verifica se o buffer foi usado e quanto tempo levou para isso:
-        buffer = False
+        buffer = False #Varivel que retorna se buffer foi utilizado
         tamanho = len(self.whiteboard.get_playback_segment_size_time_at_buffer())
         if tamanho > 0 :
             tempo_espera = self.whiteboard.get_playback_segment_size_time_at_buffer()[-1]
@@ -66,7 +66,7 @@ class R2AT(IR2A):
             else:
                 buffer = False
         else:
-            tempo_espera = 1
+            tempo_espera = 1 #Variavel que representa quanto tempo o buffer ficou armazenado
             
 
         #Ajusta o index e retorna um numero valido
@@ -83,7 +83,7 @@ class R2AT(IR2A):
         self.throughput = msg.get_bit_length()/(time.perf_counter() - self.request_time) 
         self.throughputs.append(self.throughput)
 
-        momento = msg.get_segment_id()
+        momento = msg.get_segment_id() #ID do seguimento que foi baixado
         media = mi(self.throughputs, momento)
         peso = sigma(self.throughputs, momento, media)
         probabilidade = p(media, peso)
